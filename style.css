@@ -1,0 +1,83 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 800px;
+  background-color: #b4cfb0;
+}
+
+.calc-edge {
+  border: 10px solid #789395;
+  background-color: #789395;
+  border-radius: 3%;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+}
+
+.calc {
+  background-color: #94b49f;
+  border-radius: 3%;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  height: 500px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.display {
+  background-color: #b4cfb0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-radius: 5px;
+  width: 340px;
+  height: 100px;
+  color: #000;
+  font-size: 40px;
+  padding: 8px;
+}
+
+.b-cont {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 8px;
+  justify-items: center;
+  width: 380px;
+  height: 280px;
+}
+
+button {
+  height: 65px;
+  width: 65px;
+  font-size: 24px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: inset 0px 0px 0px 5px #789395;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+button:hover {
+  background-color: #b4cfb0;
+}
+
+.clear-cont {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 75%;
+}
+
+.clear {
+  width: 60px;
+  height: 35px;
+  font-size: 16px;
+  border-radius: 0;
+}
