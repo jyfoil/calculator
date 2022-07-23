@@ -43,5 +43,18 @@ function deleteNum() {
   });
 }
 
+function clearDisplay() {
+  buttons.addEventListener("click", (e) => {
+    if (e.target.matches(".clear") && limit > 0) {
+      const displayContent = document.querySelectorAll(".number");
+      displayContent.forEach((content) => {
+        display.removeChild(content);
+      });
+      limit = 0;
+    }
+  });
+}
+
+clearDisplay();
 deleteNum();
 displayNumbers();
