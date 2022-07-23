@@ -26,6 +26,7 @@ function displayNumbers() {
   buttons.addEventListener("click", (e) => {
     if (e.target.matches(".numbers") && limit < 9) {
       const displayContent = document.createElement("div");
+      displayContent.classList.add("number");
       display.appendChild(displayContent);
       displayContent.textContent = e.target.textContent;
       limit++;
@@ -33,4 +34,14 @@ function displayNumbers() {
   });
 }
 
+function deleteNum() {
+  buttons.addEventListener("click", (e) => {
+    if (e.target.matches(".delete") && limit > 0) {
+      display.removeChild(display.lastElementChild);
+      limit--;
+    }
+  });
+}
+
+deleteNum();
 displayNumbers();
