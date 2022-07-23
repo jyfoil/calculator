@@ -20,12 +20,16 @@ function operate(operator, num1, num2) {
 
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".calc");
+let limit = 0;
 
 function displayNumbers() {
   buttons.addEventListener("click", (e) => {
-    const displayContent = document.createElement("div");
-    display.appendChild(displayContent);
-    displayContent.textContent = e.target.textContent;
+    if (e.target.matches(".numbers") && limit < 9) {
+      const displayContent = document.createElement("div");
+      display.appendChild(displayContent);
+      displayContent.textContent = e.target.textContent;
+      limit++;
+    }
   });
 }
 
