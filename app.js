@@ -14,14 +14,16 @@ const divide = (a, b) => {
   return a / b;
 };
 
-function operate(operator, num1, num2) {
-  return operator(num1, num2);
+function operate(operator, a, b) {
+  return operator(a, b);
 }
 
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".calc");
 let limit = 0;
 let num1 = [];
+let num2 = [];
+let sign;
 
 function displayNumbers() {
   buttons.addEventListener("click", (e) => {
@@ -58,28 +60,23 @@ function clearDisplay() {
   });
 }
 
-function storeFirstNumArray() {
+function storeFirstNumAndOperator() {
   buttons.addEventListener("click", (e) => {
-    if (e.target.matches(".numbers") && limit < 9) {
+    if (e.target.matches(".numbers") && limit < 9 && typeof num1 !== "number") {
       num1.push(e.target.textContent);
-    }
-  });
-}
-
-function joinFirstNumArray() {
-  buttons.addEventListener("click", (e) => {
-    if (e.target.matches(".operator")) {
+    } else if (e.target.matches(".operator") && typeof num1 !== "number") {
       const displayContent = document.querySelectorAll(".number");
       displayContent.forEach((content) => {
         display.removeChild(content);
       });
+      limit = 0;
       num1 = +num1.join("");
+      sign = e.target.classList.value;
     }
   });
 }
 
-storeFirstNumArray();
-joinFirstNumArray();
+storeFirstNumAndOperator();
 clearDisplay();
 deleteNum();
 displayNumbers();
