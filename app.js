@@ -21,6 +21,7 @@ function operate(operator, num1, num2) {
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".calc");
 let limit = 0;
+let num1 = [];
 
 function displayNumbers() {
   buttons.addEventListener("click", (e) => {
@@ -39,6 +40,7 @@ function deleteNum() {
     if (e.target.matches(".delete") && limit > 0) {
       display.removeChild(display.lastElementChild);
       limit--;
+      num1.pop();
     }
   });
 }
@@ -50,11 +52,34 @@ function clearDisplay() {
       displayContent.forEach((content) => {
         display.removeChild(content);
       });
+      num1 = [];
       limit = 0;
     }
   });
 }
 
+function storeFirstNumArray() {
+  buttons.addEventListener("click", (e) => {
+    if (e.target.matches(".numbers") && limit < 9) {
+      num1.push(e.target.textContent);
+    }
+  });
+}
+
+function joinFirstNumArray() {
+  buttons.addEventListener("click", (e) => {
+    if (e.target.matches(".operator")) {
+      const displayContent = document.querySelectorAll(".number");
+      displayContent.forEach((content) => {
+        display.removeChild(content);
+      });
+      num1 = +num1.join("");
+    }
+  });
+}
+
+storeFirstNumArray();
+joinFirstNumArray();
 clearDisplay();
 deleteNum();
 displayNumbers();
