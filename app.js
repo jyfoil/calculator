@@ -24,6 +24,7 @@ numberBtns.addEventListener("click", (e) => {
     limit < 9 &&
     typeof firstNumber === "number"
   ) {
+    clearDisplay();
     displayNumbers(e);
     storeNumInArray(e, secondNumber);
   }
@@ -53,7 +54,7 @@ deleteBtn.addEventListener("click", () => {
   }
 });
 
-clearBtn.addEventListener("click", clearDisplay);
+clearBtn.addEventListener("click", clearNumbers);
 
 function displayNumbers(e) {
   const displayContent = document.createElement("div");
@@ -75,13 +76,20 @@ function deleteLastNum() {
   num1.pop();
 }
 
-function clearDisplay() {
+function clearNumbers() {
   const displayContent = document.querySelectorAll(".number");
   displayContent.forEach((content) => {
     display.removeChild(content);
   });
   num1 = [];
   limit = 0;
+}
+
+function clearDisplay() {
+  const operator = document.querySelector(".op");
+  while (display.firstChild && operator) {
+    display.removeChild(display.firstChild);
+  }
 }
 
 function storeNumInArray(e, variable) {
@@ -94,10 +102,10 @@ function convertArrayToNum(array) {
 
 function storeOperator(e) {
   sign = e.target.classList.value;
-  const displayNumber = document.querySelectorAll(".number");
-  displayNumber.forEach((number) => {
-    display.removeChild(number);
-  });
+  const displayOperator = document.createElement("div");
+  display.appendChild(displayOperator);
+  displayOperator.classList.add("op");
+  displayOperator.textContent = e.target.textContent;
   limit = 0;
 }
 
