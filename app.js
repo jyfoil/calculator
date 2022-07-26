@@ -3,6 +3,7 @@ const numberBtns = document.querySelector(".calc");
 const deleteBtn = document.querySelector(".delete");
 const clearBtn = document.querySelector(".clear");
 const operatorBtns = document.querySelector(".b-cont");
+const equalsBtn = document.querySelector(".equals");
 
 let limit = 0;
 let firstNumber = [];
@@ -31,8 +32,19 @@ numberBtns.addEventListener("click", (e) => {
 operatorBtns.addEventListener("click", (e) => {
   if (e.target.matches(".operator")) {
     convertArrayToNum(firstNumber);
+    firstNumber = temp;
     storeOperator(e);
   }
+});
+
+equalsBtn.addEventListener("click", () => {
+  convertArrayToNum(secondNumber);
+  secondNumber = temp;
+  const displayNumber = document.querySelectorAll(".number");
+  displayNumber.forEach((number) => {
+    display.removeChild(number);
+  });
+  displaySolution();
 });
 
 deleteBtn.addEventListener("click", () => {
@@ -77,7 +89,7 @@ function storeNumInArray(e, variable) {
 }
 
 function convertArrayToNum(array) {
-  firstNumber = parseInt(array.join(""));
+  temp = parseInt(array.join(""));
 }
 
 function storeOperator(e) {
@@ -87,6 +99,12 @@ function storeOperator(e) {
     display.removeChild(number);
   });
   limit = 0;
+}
+
+function displaySolution() {
+  const displayValue = document.createElement("div");
+  display.appendChild(displayValue);
+  displayValue.textContent = calculate();
 }
 
 const add = (a, b) => {
@@ -107,4 +125,16 @@ const divide = (a, b) => {
 
 function operate(operator, a, b) {
   return operator(a, b);
+}
+
+function calculate() {
+  if (sign === "operator plus") {
+    return operate(add, firstNumber, secondNumber);
+  } else if (sign === "operator sub") {
+    return operate(subtract, firstNumber, secondNumber);
+  } else if (sign === "operator multi") {
+    return operate(multiply, firstNumber, secondNumber);
+  } else if (sign === "operator divide") {
+    return operate(divide, firstNumber, secondNumber);
+  }
 }
