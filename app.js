@@ -106,8 +106,16 @@ function checkForValues() {
 
 function deleteLastNum() {
   display.removeChild(display.lastElementChild);
-  limit--;
-  num1.pop();
+  if (typeof firstNumber !== "number") {
+    limit--;
+    firstNumber.pop();
+  } else if (
+    typeof firstNumber === "number" &&
+    typeof secondNumber !== "number"
+  ) {
+    limit--;
+    secondNumber.pop();
+  }
 }
 
 function clearEverything() {
