@@ -8,6 +8,8 @@ const equalsBtn = document.querySelector(".equals");
 let limit = 0;
 let firstNumber = [];
 let secondNumber = [];
+let numbersAfter = [];
+let solution;
 let temp;
 let sign;
 
@@ -22,30 +24,62 @@ numberBtns.addEventListener("click", (e) => {
   } else if (
     e.target.matches(".numbers") &&
     limit < 9 &&
-    typeof firstNumber === "number"
+    typeof firstNumber === "number" &&
+    typeof secondNumber !== "number"
   ) {
     clearDisplay();
     displayNumbers(e);
     storeNumInArray(e, secondNumber);
+  } else if (
+    e.target.matches(".numbers") &&
+    typeof firstNumber === "number" &&
+    typeof secondNumber === "number"
+  ) {
+    clearDisplay();
+    displayNumbers(e);
+    storeNumInArray(e, numbersAfter);
   }
 });
 
 operatorBtns.addEventListener("click", (e) => {
-  if (e.target.matches(".operator")) {
+  const operator = document.querySelector(".op");
+  if (
+    e.target.matches(".operator") &&
+    !operator &&
+    typeof firstNumber !== "number"
+  ) {
     convertArrayToNum(firstNumber);
     firstNumber = temp;
+    storeOperator(e);
+  } else if (
+    e.target.matches(".operator") &&
+    typeof firstNumber === "number" &&
+    typeof secondNumber === "number" &&
+    !operator
+  ) {
     storeOperator(e);
   }
 });
 
 equalsBtn.addEventListener("click", () => {
-  convertArrayToNum(secondNumber);
-  secondNumber = temp;
-  const displayNumber = document.querySelectorAll(".number");
-  displayNumber.forEach((number) => {
-    display.removeChild(number);
-  });
-  displaySolution();
+  if (typeof secondNumber === "object" && !solution) {
+    convertArrayToNum(secondNumber);
+    secondNumber = temp;
+    const displayNumber = document.querySelectorAll(".number");
+    displayNumber.forEach((number) => {
+      display.removeChild(number);
+    });
+    displaySolution();
+  } else if (solution) {
+    convertArrayToNum(numbersAfter);
+    numbersAfter = temp;
+    const displayNumber = document.querySelectorAll(".number");
+    displayNumber.forEach((number) => {
+      display.removeChild(number);
+    });
+    displaySolution();
+    numbersAfter = [];
+  }
 });
 
 deleteBtn.addEventListener("click", () => {
@@ -110,9 +144,12 @@ function storeOperator(e) {
 }
 
 function displaySolution() {
-  const displayValue = document.createElement("div");
-  display.appendChild(displayValue);
-  displayValue.textContent = calculate();
+  if (typeof firstNumber === "number" && typeof secondNumber === "number") {
+    const displayValue = document.createElement("div");
+    display.appendChild(displayValue);
+    calculate();
+    displayValue.textContent = solution;
+  }
 }
 
 const add = (a, b) => {
@@ -136,13 +173,21 @@ function operate(operator, a, b) {
 }
 
 function calculate() {
-  if (sign === "operator plus") {
-    return operate(add, firstNumber, secondNumber);
-  } else if (sign === "operator sub") {
-    return operate(subtract, firstNumber, secondNumber);
-  } else if (sign === "operator multi") {
-    return operate(multiply, firstNumber, secondNumber);
-  } else if (sign === "operator divide") {
-    return operate(divide, firstNumber, secondNumber);
+  if (sign === "operator plus" && !solution) {
+    solution = operate(add, firstNumber, secondNumber);
+  } else if (sign === "operator sub" && !solution) {
+    solution = operate(subtract, firstNumber, secondNumber);
+  } else if (sign === "operator multi" && !solution) {
+    solution = operate(multiply, firstNumber, secondNumber);
+  } else if (sign === "operator divide" && !solution) {
+    solution = operate(divide, firstNumber, secondNumber);
+  } else if (sign === "operator plus" && solution) {
+    solution = operate(add, solution, numbersAfter);
+  } else if (sign === "operator sub" && solution) {
+    solution = operate(subtract, solution, numbersAfter);
+  } else if (sign === "operator multi" && solution) {
+    solution = operate(multiply, solution, numbersAfter);
+  } else if (sign === "operator divide" && solution) {
+    solution = operate(divide, solution, numbersAfter);
   }
 }
