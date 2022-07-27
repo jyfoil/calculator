@@ -88,7 +88,7 @@ deleteBtn.addEventListener("click", () => {
   }
 });
 
-clearBtn.addEventListener("click", clearNumbers);
+clearBtn.addEventListener("click", clearEverything);
 
 function displayNumbers(e) {
   const displayContent = document.createElement("div");
@@ -110,13 +110,15 @@ function deleteLastNum() {
   num1.pop();
 }
 
-function clearNumbers() {
-  const displayContent = document.querySelectorAll(".number");
+function clearEverything() {
+  const displayContent = document.querySelectorAll(".display > div");
   displayContent.forEach((content) => {
     display.removeChild(content);
   });
-  num1 = [];
   limit = 0;
+  firstNumber = [];
+  secondNumber = [];
+  solution = 0;
 }
 
 function clearDisplay() {
