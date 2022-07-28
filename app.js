@@ -69,7 +69,12 @@ operatorBtns.addEventListener("click", (e) => {
 });
 
 equalsBtn.addEventListener("click", () => {
-  if (typeof secondNumber === "object" && !solution) {
+  if (
+    typeof secondNumber === "object" &&
+    !solution &&
+    display.lastChild.matches(".number") &&
+    typeof firstNumber === "number"
+  ) {
     convertArrayToNum(secondNumber);
     secondNumber = temp;
     const displayNumber = document.querySelectorAll(".number");
@@ -77,7 +82,7 @@ equalsBtn.addEventListener("click", () => {
       display.removeChild(number);
     });
     displaySolution();
-  } else if (solution) {
+  } else if (solution && display.lastChild.matches(".number")) {
     convertArrayToNum(numbersAfter);
     numbersAfter = temp;
     const displayNumber = document.querySelectorAll(".number");
