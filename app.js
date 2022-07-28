@@ -37,7 +37,11 @@ numberBtns.addEventListener("click", (e) => {
     clearEverything();
     displayNumbers(e);
     storeNumInArray(e, firstNumber);
-  } else if (e.target.matches(".numbers") && typeof secondNumber === "number") {
+  } else if (
+    e.target.matches(".numbers") &&
+    typeof secondNumber === "number" &&
+    limit < 9
+  ) {
     clearDisplay();
     displayNumbers(e);
     storeNumInArray(e, numbersAfter);
