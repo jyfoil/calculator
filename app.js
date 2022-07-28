@@ -4,6 +4,7 @@ const deleteBtn = document.querySelector(".delete");
 const clearBtn = document.querySelector(".clear");
 const operatorBtns = document.querySelector(".b-cont");
 const equalsBtn = document.querySelector(".equals");
+const decimalBtn = document.querySelector(".decimal");
 
 let limit = 0;
 let firstNumber = [];
@@ -50,10 +51,12 @@ numberBtns.addEventListener("click", (e) => {
 
 operatorBtns.addEventListener("click", (e) => {
   const operator = document.querySelector(".op");
+  const number = document.querySelector(".number");
   if (
     e.target.matches(".operator") &&
     !operator &&
-    typeof firstNumber !== "number"
+    typeof firstNumber !== "number" &&
+    number
   ) {
     convertArrayToNum(firstNumber);
     firstNumber = temp;
@@ -61,8 +64,9 @@ operatorBtns.addEventListener("click", (e) => {
   } else if (
     e.target.matches(".operator") &&
     typeof firstNumber === "number" &&
-    typeof secondNumber === "number" &&
-    !operator
+    !operator &&
+    numbersAfter.length === 0 &&
+    !(secondNumber.length > 0)
   ) {
     storeOperator(e);
   }
@@ -77,17 +81,17 @@ equalsBtn.addEventListener("click", () => {
   ) {
     convertArrayToNum(secondNumber);
     secondNumber = temp;
-    const displayNumber = document.querySelectorAll(".number");
-    displayNumber.forEach((number) => {
-      display.removeChild(number);
+    const displayItems = document.querySelectorAll(".display > div");
+    displayItems.forEach((item) => {
+      display.removeChild(item);
     });
     displaySolution();
   } else if (solution && display.lastChild.matches(".number")) {
     convertArrayToNum(numbersAfter);
     numbersAfter = temp;
-    const displayNumber = document.querySelectorAll(".number");
-    displayNumber.forEach((number) => {
-      display.removeChild(number);
+    const displayItems = document.querySelectorAll(".display > div");
+    displayItems.forEach((item) => {
+      display.removeChild(item);
     });
     displaySolution();
     numbersAfter = [];
@@ -101,6 +105,28 @@ deleteBtn.addEventListener("click", () => {
 });
 
 clearBtn.addEventListener("click", clearEverything);
+
+decimalBtn.addEventListener("click", (e) => {
+  const decimal = document.querySelector(".deci");
+  if (typeof firstNumber !== "number" && firstNumber.length >= 1 && !decimal) {
+    addDecimal(e);
+    storeNumInArray(e, firstNumber);
+  } else if (
+    typeof firstNumber === "number" &&
+    !decimal &&
+    secondNumber.length >= 1
+  ) {
+    addDecimal(e);
+    storeNumInArray(e, secondNumber);
+  } else if (
+    typeof secondNumber === "number" &&
+    !decimal &&
+    numbersAfter.length >= 1
+  ) {
+    addDecimal(e);
+    storeNumInArray(e, numbersAfter);
+  }
+});
 
 function displayNumbers(e) {
   const displayContent = document.createElement("div");
@@ -148,12 +174,19 @@ function clearDisplay() {
   }
 }
 
+function addDecimal(e) {
+  const decimal = document.createElement("div");
+  decimal.classList.add("deci");
+  display.appendChild(decimal);
+  decimal.textContent = e.target.textContent;
+}
+
 function storeNumInArray(e, variable) {
   variable.push(e.target.textContent);
 }
 
 function convertArrayToNum(array) {
-  temp = parseInt(array.join(""));
+  temp = parseFloat(array.join(""));
 }
 
 function storeOperator(e) {
