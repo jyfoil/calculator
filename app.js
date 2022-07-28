@@ -24,7 +24,6 @@ numberBtns.addEventListener("click", (e) => {
   } else if (
     e.target.matches(".numbers") &&
     limit < 9 &&
-    typeof firstNumber === "number" &&
     typeof secondNumber !== "number"
   ) {
     clearDisplay();
@@ -32,9 +31,13 @@ numberBtns.addEventListener("click", (e) => {
     storeNumInArray(e, secondNumber);
   } else if (
     e.target.matches(".numbers") &&
-    typeof firstNumber === "number" &&
-    typeof secondNumber === "number"
+    typeof secondNumber === "number" &&
+    display.lastChild.matches(".answer")
   ) {
+    clearEverything();
+    displayNumbers(e);
+    storeNumInArray(e, firstNumber);
+  } else if (e.target.matches(".numbers") && typeof secondNumber === "number") {
     clearDisplay();
     displayNumbers(e);
     storeNumInArray(e, numbersAfter);
@@ -158,6 +161,7 @@ function displaySolution() {
     const displayValue = document.createElement("div");
     display.appendChild(displayValue);
     calculate();
+    displayValue.classList.add("answer");
     displayValue.textContent = solution;
   }
 }
