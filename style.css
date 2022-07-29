@@ -2,10 +2,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 48px;
   margin: 0;
   padding: 0;
-  height: 800px;
+  height: 1000px;
   background-color: #b4cfb0;
+  font-family: "Signika Negative", sans-serif;
 }
 
 .calc-edge {
@@ -37,7 +40,6 @@ body {
   border-radius: 5px;
   width: 340px;
   height: 100px;
-  color: #000;
   font-size: 40px;
   padding: 8px;
 }
@@ -81,4 +83,10 @@ button:hover {
   height: 35px;
   font-size: 16px;
   border-radius: 0;
+}
+
+a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #000;
 }
