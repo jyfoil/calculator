@@ -203,11 +203,20 @@ function storeOperator(e) {
 }
 
 function displaySolution() {
-  if (typeof firstNumber === "number" && typeof secondNumber === "number") {
+  if (
+    typeof firstNumber === "number" &&
+    typeof secondNumber === "number" &&
+    !solution.includes("e+0")
+  ) {
     const displayValue = document.createElement("div");
     display.appendChild(displayValue);
     displayValue.classList.add("answer");
     displayValue.textContent = solution;
+  } else if (solution.includes("e+0")) {
+    const displayValue = document.createElement("div");
+    display.appendChild(displayValue);
+    displayValue.classList.add("answer");
+    displayValue.textContent = parseFloat(solution).toFixed(1);
   }
 }
 
