@@ -85,14 +85,18 @@ equalsBtn.addEventListener("click", () => {
     displayItems.forEach((item) => {
       display.removeChild(item);
     });
+    calculate();
     displaySolution();
   } else if (solution && display.lastChild.matches(".number")) {
+    solution = parseFloat(solution);
     convertArrayToNum(numbersAfter);
     numbersAfter = temp;
     const displayItems = document.querySelectorAll(".display > div");
     displayItems.forEach((item) => {
       display.removeChild(item);
     });
+    calculate();
+    convertToExponential();
     displaySolution();
     numbersAfter = [];
   }
@@ -202,9 +206,15 @@ function displaySolution() {
   if (typeof firstNumber === "number" && typeof secondNumber === "number") {
     const displayValue = document.createElement("div");
     display.appendChild(displayValue);
-    calculate();
     displayValue.classList.add("answer");
     displayValue.textContent = solution;
+  }
+}
+
+function convertToExponential() {
+  if (solution.toString().length > 9) {
+    solution = parseFloat(solution);
+    solution = solution.toExponential(3);
   }
 }
 
@@ -230,20 +240,20 @@ function operate(operator, a, b) {
 
 function calculate() {
   if (sign === "operator plus" && !solution) {
-    solution = operate(add, firstNumber, secondNumber);
+    solution = operate(add, firstNumber, secondNumber).toString();
   } else if (sign === "operator sub" && !solution) {
-    solution = operate(subtract, firstNumber, secondNumber);
+    solution = operate(subtract, firstNumber, secondNumber).toString();
   } else if (sign === "operator multi" && !solution) {
-    solution = operate(multiply, firstNumber, secondNumber);
+    solution = operate(multiply, firstNumber, secondNumber).toString();
   } else if (sign === "operator divide" && !solution) {
-    solution = operate(divide, firstNumber, secondNumber);
+    solution = operate(divide, firstNumber, secondNumber).toString();
   } else if (sign === "operator plus" && solution) {
-    solution = operate(add, solution, numbersAfter);
+    solution = operate(add, solution, numbersAfter).toString();
   } else if (sign === "operator sub" && solution) {
-    solution = operate(subtract, solution, numbersAfter);
+    solution = operate(subtract, solution, numbersAfter).toString();
   } else if (sign === "operator multi" && solution) {
-    solution = operate(multiply, solution, numbersAfter);
+    solution = operate(multiply, solution, numbersAfter).toString();
   } else if (sign === "operator divide" && solution) {
-    solution = operate(divide, solution, numbersAfter);
+    solution = operate(divide, solution, numbersAfter).toString();
   }
 }
