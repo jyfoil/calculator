@@ -151,12 +151,11 @@ function deleteLastNum() {
   if (typeof firstNumber !== "number") {
     limit--;
     firstNumber.pop();
-  } else if (
-    typeof firstNumber === "number" &&
-    typeof secondNumber !== "number"
-  ) {
+  } else if (typeof secondNumber !== "number") {
     limit--;
     secondNumber.pop();
+  } else if (solution) {
+    clearEverything();
   }
 }
 
