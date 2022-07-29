@@ -86,6 +86,7 @@ equalsBtn.addEventListener("click", () => {
       display.removeChild(item);
     });
     calculate();
+    convertToExponential();
     displaySolution();
   } else if (solution && display.lastChild.matches(".number")) {
     solution = parseFloat(solution);
