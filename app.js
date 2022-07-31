@@ -206,7 +206,8 @@ function displaySolution() {
   if (
     typeof firstNumber === "number" &&
     typeof secondNumber === "number" &&
-    !solution.includes("e+0")
+    !solution.includes("e+0") &&
+    solution !== "Infinity"
   ) {
     const displayValue = document.createElement("div");
     display.appendChild(displayValue);
@@ -217,6 +218,11 @@ function displaySolution() {
     display.appendChild(displayValue);
     displayValue.classList.add("answer");
     displayValue.textContent = parseFloat(solution).toFixed(1);
+  } else if (solution === "Infinity") {
+    const displayValue = document.createElement("div");
+    display.appendChild(displayValue);
+    displayValue.classList.add("answer");
+    displayValue.textContent = "ERROR";
   }
 }
 
